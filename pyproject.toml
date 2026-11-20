@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vidctx-mcp"
+version = "0.1.0"
+description = "面向 AI Agent 的按需渐进式视频上下文读取器（MCP & CLI）"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+authors = [{name = "WuHuiYang"}]
+keywords = ["mcp", "agent", "video", "context-engineering", "multimodal", "bm25"]
+dependencies = [
+    "mcp>=1.2.0",
+    "pydantic>=2.0",
+    "click>=8.0",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+remote = ["yt-dlp>=2024.0", "youtube-transcript-api>=1.0.0"]
+ocr = ["rapidocr>=3.0", "onnxruntime>=1.16"]
+asr = ["faster-whisper>=1.0.0", "openai>=1.0.0"]
+all = ["vidctx-mcp[remote,ocr,asr]"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.24"]
+
+[project.scripts]
+vidctx = "vidctx.cli:main"
+vidctx-mcp = "vidctx.server:main"
+
+[project.urls]
+Homepage = "https://github.com/WuHuiYang/vidctx-mcp"
+Repository = "https://github.com/WuHuiYang/vidctx-mcp"
+Issues = "https://github.com/WuHuiYang/vidctx-mcp/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
